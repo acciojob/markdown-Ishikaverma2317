@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
 
 function MarkdownEditor() {
   const [text, setText] = useState("");
@@ -24,7 +23,7 @@ function MarkdownEditor() {
         {loading ? (
           <p className="loading">Loading...</p>
         ) : (
-          <ReactMarkdown>{preview}</ReactMarkdown>
+          <div>{preview}</div>
         )}
       </div>
     </div>
