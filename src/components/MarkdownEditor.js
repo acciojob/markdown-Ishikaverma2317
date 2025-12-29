@@ -1,13 +1,37 @@
 import React, { useState } from "react";
 
 function parseMarkdown(text) {
-  // h1 support
-  if (text.startsWith("# ")) {
-    return <h1>{text.replace("# ", "")}</h1>;
-  }
+  const lines = text.split("\n");
+  const elements = [];
 
-  // fallback plain text
-  return <p>{text}</p>;
+  lines.forEach((line, index) => {
+    // h1
+    if (line.startsWith("# ")) {
+      elements.push(<h1 key={index}>{line.replace("# ", "")}</h1>);
+    }
+    // empty line → skip
+    else if (line.trim() === "") {
+      return;
+    }
+    // paragraph + bold support
+    else {
+      const parts = line.split(/(\*\*.*?\*\*)/g);
+
+      elements.push(
+        <p key={index}>
+          {parts.map((part, i) =>
+            part.startsWith("**") ? (
+              <strong key={i}>{part.replace(/\*\*/g, "")}</strong>
+            ) : (
+              part
+            )
+          )}
+        </p>
+      );
+    }
+  });
+
+  return elements;
 }
 
 function MarkdownEditor() {
