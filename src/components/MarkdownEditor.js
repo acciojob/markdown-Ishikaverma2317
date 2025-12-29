@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 
 function MarkdownEditor() {
   const [text, setText] = useState("");
-  const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setPreview(text);
     setLoading(false);
   }, [text]);
 
@@ -23,7 +22,7 @@ function MarkdownEditor() {
         {loading ? (
           <p className="loading">Loading...</p>
         ) : (
-          <div>{preview}</div>
+          <ReactMarkdown>{text}</ReactMarkdown>
         )}
       </div>
     </div>
