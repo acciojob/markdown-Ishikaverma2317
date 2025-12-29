@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
+import React, { useState } from "react";
+
+function parseMarkdown(text) {
+  // h1 support
+  if (text.startsWith("# ")) {
+    return <h1>{text.replace("# ", "")}</h1>;
+  }
+
+  // fallback plain text
+  return <p>{text}</p>;
+}
 
 function MarkdownEditor() {
   const [text, setText] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(false);
-  }, [text]);
 
   return (
     <div className="editor-container">
@@ -19,11 +23,7 @@ function MarkdownEditor() {
       />
 
       <div className="preview">
-        {loading ? (
-          <p className="loading">Loading...</p>
-        ) : (
-          <ReactMarkdown>{text}</ReactMarkdown>
-        )}
+        {parseMarkdown(text)}
       </div>
     </div>
   );
